@@ -1,24 +1,21 @@
-#ifndef _PHONEBOOK_H
-#define _PHONEBOOK_H
-
+#ifndef _PHONEBOOK_BINARY_H
+#define _PHONEBOOK_BINARY_H
+#include <stdio.h>
+#include <stdint.h>
 #define MAX_LAST_NAME_SIZE 16
 
-/* original version */
-typedef struct __PHONE_BOOK_ENTRY {
-    char lastName[MAX_LAST_NAME_SIZE];
-    char firstName[16];
-    char email[16];
-    char phone[10];
-    char cell[10];
-    char addr1[16];
-    char addr2[16];
-    char city[16];
-    char state[2];
-    char zip[5];
-    struct __PHONE_BOOK_ENTRY *pNext;
+/* binary search version */
+#define MAXSIZE 10000000
+typedef struct {
+    int index;
 } entry;
 
-entry *findName(char lastname[], entry *pHead);
-entry *append(char lastName[], entry *e);
+typedef struct {
+    entry* iEntrys;
+    int size;
+} indexTable;
+
+int buildIndexTable(indexTable* iTable, FILE* fp);
+entry *findName(char lastName[], indexTable *iTable, FILE* fp);
 
 #endif

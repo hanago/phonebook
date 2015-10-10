@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <assert.h>
+#define INPUT_SIZE 8
 
 #include IMPL
 
@@ -63,19 +64,21 @@ int main(int argc, char *argv[])
     e = pHead;
 
     /* the givn last name to find */
-    char input[MAX_LAST_NAME_SIZE] = "zyxel";
-    e = pHead;
+    char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank",
+            "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"
+                                                 };
 
-    assert(findName(input, e) &&
-           "Did you implement findName() in " IMPL "?");
-    assert(0 == strcmp(findName(input, e)->lastName, "zyxel"));
 
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
     /* compute the execution time */
+    int j;
     clock_gettime(CLOCK_REALTIME, &start);
-    findName(input, e);
+    for(j = 0; j < INPUT_SIZE; j++) {
+        findName(input[j], e);
+        e = pHead;
+    }
     clock_gettime(CLOCK_REALTIME, &end);
     cpu_time2 = diff_in_second(start, end);
 

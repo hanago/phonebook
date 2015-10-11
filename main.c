@@ -95,8 +95,6 @@ int main(int argc, char *argv[])
 #endif
 
 
-
-
 #if defined(_PHONEBOOK_BINARY_H)
     /* build the entry */
     indexTable e;

@@ -48,10 +48,9 @@ entry *findName(char lastName[], indexTable *iTable, FILE* fp)
 
         /* binary search */
         diff = strcasecmp(lastName, line);
-        if(diff == 0) {
-            //printf(" %12s  is found!\n", lastName);
+        if(diff == 0) 
             return (iTable->iEntrys+cursor)->index;
-        } else if(diff > 0)
+        else if(diff > 0)
             lowerBound = lowerBound + (upperBound-lowerBound)/2 + 1;
         else
             upperBound = upperBound - (upperBound-lowerBound)/2;

@@ -13,11 +13,11 @@ int buildIndexTable(indexTable* iTable, FILE* fp)
 
     /* first entry*/
     (iTable->iEntrys)->index = 0;
-    if((!fgets(line,MAX_LAST_NAME_SIZE,fp))){
+    if((!fgets(line,MAX_LAST_NAME_SIZE,fp))) {
         iTable->size = 0;
         return 0;
     }
-    
+
     /* rest of entries */
     i = 1;
     do {

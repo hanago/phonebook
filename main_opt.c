@@ -57,6 +57,9 @@ int main(int argc, char *argv[])
             "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"
                                                  };
 
+    assert(findName(input[0], &e, fp) &&
+           "Did you implement findName() in " IMPL "?");
+
 #if defined(__GNUC__)
     __builtin___clear_cache(&e, &e + sizeof(entry)*MAXSIZE);
 #endif

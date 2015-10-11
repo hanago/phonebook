@@ -67,7 +67,11 @@ int main(int argc, char *argv[])
     char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank",
             "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"
                                                  };
+    e = pHead;
 
+    assert(findName(input[0], e) &&
+           "Did you implement findName() in " IMPL "?");
+    assert(0 == strcmp(findName(input[0], e)->lastName, "uninvolved"));
 
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));

@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+#if defined(_PHONEBOOK_H)
     /* build the entry */
     entry *pHead, *e;
     pHead = (entry *) malloc(sizeof(entry));
@@ -91,6 +92,53 @@ int main(int argc, char *argv[])
 
     /* FIXME: release all allocated entries */
     free(pHead);
+#endif
+
+
+
+
+#if defined(_PHONEBOOK_BINARY_H)
+    /* build the entry */
+    indexTable e;
+    e.iEntrys = malloc(sizeof(entry)*MAXSIZE);
+#if defined(__GNUC__)
+    __builtin___clear_cache(&e, &e + sizeof(entry)*MAXSIZE);
+#endif
+    printf("size of entry : %lu bytes\n", sizeof(entry));
+
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    buildIndexTable(&e,fp);
+    clock_gettime(CLOCK_REALTIME, &end);
+    cpu_time1 = diff_in_second(start, end);
+
+
+    /* the givn last name to find */
+    char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank",
+            "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"
+                                                 };
+
+    assert(findName(input[0], &e, fp) &&
+           "Did you implement findName() in " IMPL "?");
+
+#if defined(__GNUC__)
+    __builtin___clear_cache(&e, &e + sizeof(entry)*MAXSIZE);
+#endif
+    /* compute the execution time */
+    int j;
+    clock_gettime(CLOCK_REALTIME, &start);
+    for(j = 0; j < INPUT_SIZE; j++) {
+        findName(input[j], &e, fp);
+    }
+    clock_gettime(CLOCK_REALTIME, &end);
+    cpu_time2 = diff_in_second(start, end);
+
+    printf("execution time of append() : %lf sec\n", cpu_time1);
+    printf("execution time of findName() : %lf sec\n", cpu_time2);
+
+    /* FIXME: release all allocated entries */
+    fclose(fp);
+#endif
 
     return 0;
 }

@@ -4,14 +4,15 @@ CFLAGS_common ?= -O0 -Wall -std=gnu99 -Wl,--no-as-needed -lrt
 EXEC = phonebook_orig phonebook_opt
 all: $(EXEC)
 
+SRCS_common = main.c
 
-phonebook_orig: main.c phonebook_orig.c phonebook_orig.h
+phonebook_orig: $(SRCS_common) phonebook_orig.c phonebook_orig.h
 	$(CC) $(CFLAGS_common) -DIMPL="\"$@.h\"" -o $@ \
-		main.c $@.c
+		$(SRCS_common) $@.c
 
-phonebook_opt: main_opt.c phonebook_opt.c phonebook_opt.h
+phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 	$(CC) $(CFLAGS_common) -DIMPL="\"$@.h\"" -o $@ \
-		main_opt.c $@.c
+		$(SRCS_common) $@.c
 
 run_orig: $(EXEC)
 	watch -d -t ./phonebook_orig

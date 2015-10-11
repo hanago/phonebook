@@ -16,7 +16,10 @@ int buildIndexTable(indexTable* iTable, FILE* fp)
             break;
         if(line[0] == '\n')
             continue;
-        (iTable->iEntrys+i)->index = i == 0 ? 0 :
+        /** Locate the index of the string at the file stream. **/
+        /* ftell(fp): current index of the file stream.*/
+        (iTable->iEntrys+i)->index = i == 0 ?
+                                     0 :
                                      ftell(fp) - strlen(line) - 1;
         i = i+1;
     } while(1);
@@ -32,7 +35,7 @@ entry *findName(char lastName[], indexTable *iTable, FILE* fp)
 
     while (lowerBound < upperBound) {
         /* get the string of index from the file stream */
-        cursor = (lowerBound+upperBound)/2;
+        cursor = lowerBound + (upperBound - lowerBound) / 2;
         fseek(fp, (iTable->iEntrys+cursor)->index, SEEK_SET);
         fscanf(fp, "%s", line);
 
